@@ -15,6 +15,7 @@ pip3 install virtualenv
 virtualenv env
 source env/bin/activate
 pip install -r requirements.txt
+python3 create_table.py
 export FLASK_APP=app.py
 flask run
 ```
