@@ -1,0 +1,178 @@
+
+.container{
+    text-align: center;
+    margin:auto;
+    width:30%;
+    padding:16px;
+    background-color: lightslategray;   
+}
+
+input[type='text'],
+input[type='password'] {
+
+    width:50%;
+    padding: 10px;
+    margin: 5px 0 18px 0;
+    display: inline-block;
+    border: none;
+    background: whitesmoke;
+}
+
+.input {
+    border: 2px solid transparent;
+    width: 15em;
+    height: 3.5em;
+    padding-left: 0.8em;
+    outline: none;
+    overflow: hidden;
+    background-color: #F3F3F3;
+    border-radius: 10px;
+    transition: all 0.5s;
+  }
+  
+.input:hover,
+.input:focus {
+    border: 2px solid #4A9DEC;
+    box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
+    background-color: white;
+}
+
+
+
+.form-venue {
+    max-width: 800px;
+    margin: 20px auto;
+    height: 90vh;
+    max-height: 300px;
+    width: 90vw;
+    min-width: 100px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* .form-venue label {
+    display: inline-block;
+    justify-content: center;
+    margin-bottom: 8px;
+    font-size: 20px;
+    text-align: center;
+} */
+
+.form-venue select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* .form-venue {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    /* background: repeating-linear-gradient(45deg, #9cbcff,#9cbcff 20px, #b3daffde 20px,#b3daffde 40px); */
+    /* background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+} */
+
+/* Other styles for the form */
+
+
+.form-venue h1 {
+    text-align: center;
+}
+.form-venue input[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-venue input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+
+button {
+    background-color: white;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 40%;
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
+button:hover {
+   opacity: 0.9;
+}
+
+.seat {
+    position: relative; 
+    width: 30px;
+    height: 30px;
+    background-color: #e6e6e6;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.seat-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.seat-number {
+    position: absolute; 
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px; 
+}
+
+.seat-label {
+    margin-right: 10px;
+}
+
+.seat:hover {
+    background-color: #d9d9d9; 
+}
+
+.seat.selected {
+    background-color: #007bff; 
+    border-color: #0056b3; 
+    color: #fff; 
+}
+
+.passage {
+    width: 50px; 
+    flex: 0 0 auto;
+}
+
+.passage2 {
+    width: 5px; 
+    flex: 0 0 auto;
+}
+
+.clear {
+    clear: both;
+}

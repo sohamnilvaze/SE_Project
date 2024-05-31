@@ -1,0 +1,84 @@
+<style>
+    .card {
+      position: relative;
+      width: 220px;
+      height: 320px;
+      background: rgb(59, 157, 255);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+      font-weight: bold;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.5s; /* Added transition for smooth effect */
+        margin-left: 50px;
+        margin-top: 250px;
+    }
+    
+    .card.additional-card:hover {
+      background: rgb(183, 219, 255); /* Change background color on hover */
+      transform: scale(1.1); /* Scale up the card on hover */
+    }
+    
+    .card.about-us-card:hover::after {
+      content: "Something About Us"; /* Display text on hover */
+      margin-left: 5px;
+    }
+    
+    .card::before,
+    .card::after {
+      position: absolute;
+      content: "";
+      width: 20%;
+      height: 20%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+      font-weight: bold;
+      background-color: rgb(183, 219, 255);
+      transition: all 0.5s;
+      font-size: 14px;
+    }
+    
+    .card::before {
+      top: 0;
+      right: 0;
+      border-radius: 0 15px 0 100%;
+    }
+    
+    .card::after {
+      bottom: 0;
+      left: 0;
+      border-radius: 0 100%  0 15px;
+    }
+    
+    .card:hover::before,
+    .card:hover:after {
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      transition: all 0.5s;
+    }
+    
+    .card:hover:after {
+      
+        content: "Efficient booking system: Navigate, secure, and maximize academic journey productivity";
+    }
+    </style>
+    
+    {% extends "layout.html" %}
+    {% block title %}
+    FacilityMonitor - About Us
+    {% endblock %}
+    {% block content %}
+
+    <div style="display: flex; flex-direction: row;">
+
+        <div class="card">Kapil Tangsali</div>
+
+        <div class="card">Ashwin Shinde</div>
+    </div>
+    {% endblock %}
+    

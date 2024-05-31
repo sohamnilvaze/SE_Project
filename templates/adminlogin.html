@@ -1,0 +1,47 @@
+<style>
+    input[type="submit"] {
+    margin: 0 auto; 
+    display: block;
+}
+
+</style>
+{% extends "layout2.html" %}
+{% block title %}
+    Select Venue
+{% endblock %}
+
+{% block content %}
+<h1>Edit The Venue as Admin</h1>
+
+<form class="form-venue" action="{{ url_for('editvenue') }}" method="POST">
+    <label for="venue" style="font-family: 'Archivo', sans-serif; font-weight: bold; font-size: 18px;">Choose the Venue to edit</label>
+    {% if error %}
+        <p class="error-message">{{ error }}</p>
+    {% endif %}
+    <br>
+    <br>
+    <select id="venue" name="venue">
+        <option value="" disabled selected>Select Venue</option>
+        <option value="AC_floor1">Academic Complex Building 1st Floor</option>
+        <option value="AC_floor2">Academic Complex Building 2nd Floor</option>
+        <option value="Auditorium">Auditorium</option>
+        <!-- <option value="parking_slot">Parking Slot</option> -->
+    </select>
+    <br><br>
+    <label for="day" style="font-family: 'Archivo', sans-serif; font-weight: bold; font-size: 18px;">Choose a Venue to edit</label>
+    <br>
+    <br>
+    <select id="day" name="day">
+        <option value="" disabled selected>Select Day</option>
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+        <option value="Saturday">Saturday</option>
+        <option value="Sunday">Sunday</option>
+    </select>
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
