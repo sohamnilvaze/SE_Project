@@ -1,4 +1,4 @@
-import pandas
+import pandas as pd
 import tabula-py
 import openpyxl
 import pdfplumber
@@ -66,18 +66,34 @@ df_overall.columns = [0,'8:30','9:30','10:30','11:30','12:30','13:30','14:30','1
 #creating the database
 import sqlite3
 
-conn = sqlite3.connect("room_availability.db")
+conn = sqlite3.connect("room_availability_ac.db")
 cursor = conn.cursor()
 
-# cursor.execute("""DROP TABLE room_availability""")
+# cursor.execute("""DROP TABLE acFloor1""")
 
 cursor.execute("""
-    CREATE TABLE IF NOT EXISTS room_availability (
+    CREATE TABLE IF NOT EXISTS acFloor1 (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        room_no TEXT(10),
-        start_time TEXT(10),
-        end_time TEXT(10),
-        day TEXT(10)
+        day TEXT(10),
+        time_slot TEXT(10)
+        r101 TEXT(10),
+        r102 TEXT(10),
+        r103 TEXT(10),
+        r104 TEXT(10)
+    )
+""")
+
+cursor.execute("""DROP TABLE acFloor2""")
+
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS acFloor2 (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        day TEXT(10),
+        time_slot TEXT(10)
+        r201 TEXT(10),
+        r202 TEXT(10),
+        r203 TEXT(10),
+        r204 TEXT(10)
     )
 """)
 
@@ -85,201 +101,209 @@ conn.commit()
 conn.close()
 
 #inserting the extracted data from the timetable pdf into the database
-conn = sqlite3.connect("room_availability.db")
+conn = sqlite3.connect("room_availability_ac.db")
 cursor = conn.cursor()
 
 for i in range(len(df_overall[0])):
   if df_overall['8:30'][i]:
     if('AC-101' in df_overall['8:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-101','8:30','9:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'8am-9am','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-102' in df_overall['8:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-102','8:30','9:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'8am-9am','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-103' in df_overall['8:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-103','8:30','9:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'8am-9am','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-104' in df_overall['8:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-104','8:30','9:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'8am-9am','Vacant','Vacant','Vacant','Occupied'))
     elif('AC-201' in df_overall['8:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-201','8:30','9:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'8am-9am','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-202' in df_overall['8:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-202','8:30','9:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'8am-9am','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-203' in df_overall['8:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-203','8:30','9:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'8am-9am','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-204' in df_overall['8:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-204','8:30','9:30',df_overall[0][i]))
-  
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'8am-9am','Vacant','Vacant','Vacant','Occupied'))
+
 for i in range(len(df_overall[0])):
   if df_overall['9:30'][i]:
     if('AC-101' in df_overall['9:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-101','9:30','10:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'9am-10am','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-102' in df_overall['9:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-102','9:30','10:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'9am-10am','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-103' in df_overall['9:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-103','9:30','10:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'9am-10am','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-104' in df_overall['9:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-104','9:30','10:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'9am-10am','Vacant','Vacant','Vacant','Occupied'))
     elif('AC-201' in df_overall['9:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-201','9:30','10:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'9am-10am','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-202' in df_overall['9:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-202','9:30','10:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'9am-10am','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-203' in df_overall['9:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-203','9:30','10:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'9am-10am','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-204' in df_overall['9:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-204','9:30','10:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'9am-10am','Vacant','Vacant','Vacant','Occupied'))
 
 for i in range(len(df_overall[0])):
   if df_overall['10:30'][i]:
     if('AC-101' in df_overall['10:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-101','10:30','11:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'10am-11am','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-102' in df_overall['10:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-102','10:30','11:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'10am-11am','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-103' in df_overall['10:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-103','10:30','11:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'10am-1am','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-104' in df_overall['10:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-104','10:30','11:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'10am-11am','Vacant','Vacant','Vacant','Occupied'))
     elif('AC-201' in df_overall['10:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-201','10:30','11:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'10am-11am','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-202' in df_overall['10:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-202','10:30','11:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'10am-11am','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-203' in df_overall['10:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-203','10:30','11:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'10am-1am','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-204' in df_overall['10:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-204','10:30','11:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'10am-11am','Vacant','Vacant','Vacant','Occupied'))
 
 for i in range(len(df_overall[0])):
   if df_overall['11:30'][i]:
     if('AC-101' in df_overall['11:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-101','11:30','12:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'11am-12pm','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-102' in df_overall['11:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-102','11:30','12:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'11am-12pm','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-103' in df_overall['11:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-103','11:30','12:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'11am-12pm','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-104' in df_overall['11:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-104','11:30','12:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'11am-12pm','Vacant','Vacant','Vacant','Occupied'))
     elif('AC-201' in df_overall['11:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-201','11:30','12:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'11am-12pm','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-202' in df_overall['11:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-202','11:30','12:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'11am-12pm','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-203' in df_overall['11:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-203','11:30','12:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'11am-12pm','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-204' in df_overall['11:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-204','11:30','12:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'11am-12pm','Vacant','Vacant','Vacant','Occupied'))
 
 for i in range(len(df_overall[0])):
   if df_overall['12:30'][i]:
     if('AC-101' in df_overall['12:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-101','12:30','13:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'12pm-1pm','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-102' in df_overall['12:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-102','12:30','13:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'12pm-1pm','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-103' in df_overall['12:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-103','12:30','13:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'12pm-1pm','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-104' in df_overall['12:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-104','12:30','13:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'12pm-1pm','Vacant','Vacant','Vacant','Occupied'))
     elif('AC-201' in df_overall['12:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-201','12:30','13:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'12pm-1pm','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-202' in df_overall['12:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-202','12:30','13:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'12pm-1pm','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-203' in df_overall['12:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-203','12:30','13:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'12pm-1pm','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-204' in df_overall['12:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-204','12:30','13:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'12pm-1pm','Vacant','Vacant','Vacant','Occupied'))
 
 for i in range(len(df_overall[0])):
   if df_overall['13:30'][i]:
     if('AC-101' in df_overall['13:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-101','13:30','14:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'1pm-2pm','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-102' in df_overall['13:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-102','13:30','14:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'1pm-2pm','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-103' in df_overall['13:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-103','13:30','14:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'1pm-2pm','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-104' in df_overall['13:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-104','13:30','14:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'1pm-2pm','Vacant','Vacant','Vacant','Occupied'))
     elif('AC-201' in df_overall['13:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-201','13:30','14:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'1pm-2pm','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-202' in df_overall['13:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-202','13:30','14:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'1pm-2pm','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-203' in df_overall['13:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-203','13:30','14:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'1pm-2pm','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-204' in df_overall['13:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-204','13:30','14:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'1pm-2pm','Vacant','Vacant','Vacant','Occupied'))
 
 for i in range(len(df_overall[0])):
   if df_overall['14:30'][i]:
     if('AC-101' in df_overall['14:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-101','14:30','15:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'2pm-3pm','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-102' in df_overall['14:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-102','14:30','15:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'2pm-3pm','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-103' in df_overall['14:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-103','14:30','15:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'2pm-3pm','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-104' in df_overall['14:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-104','14:30','15:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'2pm-3pm','Vacant','Vacant','Vacant','Occupied'))
     elif('AC-201' in df_overall['14:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-201','14:30','15:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'2pm-3pm','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-202' in df_overall['14:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-202','14:30','15:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'2pm-3pm','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-203' in df_overall['14:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-203','14:30','15:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'2pm-3pm','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-204' in df_overall['14:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-204','14:30','15:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'2pm-3pm','Vacant','Vacant','Vacant','Occupied'))
 
 for i in range(len(df_overall[0])):
   if df_overall['15:30'][i]:
     if('AC-101' in df_overall['15:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-101','15:30','16:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'3pm-4pm','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-102' in df_overall['15:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-102','15:30','16:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'3pm-4pm','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-103' in df_overall['15:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-103','15:30','16:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'3pm-4pm','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-104' in df_overall['15:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-104','15:30','16:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'3pm-4pm','Vacant','Vacant','Vacant','Occupied'))
     elif('AC-201' in df_overall['15:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-201','15:30','16:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'3pm-4pm','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-202' in df_overall['15:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-202','15:30','16:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'3pm-4pm','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-203' in df_overall['15:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-203','15:30','16:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'3pm-4pm','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-204' in df_overall['15:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-204','15:30','16:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'3pm-4pm','Vacant','Vacant','Vacant','Occupied'))
 
 for i in range(len(df_overall[0])):
   if df_overall['16:30'][i]:
     if('AC-101' in df_overall['16:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-101','16:30','17:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'4pm-5pm','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-102' in df_overall['16:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-102','16:30','17:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'4pm-5pm','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-103' in df_overall['16:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-103','16:30','17:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'4pm-5pm','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-104' in df_overall['16:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-104','16:30','17:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'4pm-5pm','Vacant','Vacant','Vacant','Occupied'))
     elif('AC-201' in df_overall['16:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-201','16:30','17:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'4pm-5pm','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-202' in df_overall['16:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-202','16:30','17:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'4pm-5pm','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-203' in df_overall['16:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-203','16:30','17:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'4pm-5pm','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-204' in df_overall['16:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-204','16:30','17:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'4pm-5pm','Vacant','Vacant','Vacant','Occupied'))
+
 
 for i in range(len(df_overall[0])):
   if df_overall['17:30'][i]:
     if('AC-101' in df_overall['17:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-101','17:30','18:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'5pm-6pm','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-102' in df_overall['17:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-102','17:30','18:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'5pm-6pm','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-103' in df_overall['17:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-103','17:30','18:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'5pm-6pm','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-104' in df_overall['17:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-104','17:30','18:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor1(day,time_slot,r101,r102,r103,r104) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'5pm-6pm','Vacant','Vacant','Vacant','Occupied'))
     elif('AC-201' in df_overall['17:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-201','17:30','18:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'5pm-6pm','Occupied','Vacant','Vacant','Vacant'))
     elif('AC-202' in df_overall['17:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-202','17:30','18:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'5pm-6pm','Vacant','Occupied','Vacant','Vacant'))
     elif('AC-203' in df_overall['17:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-203','17:30','18:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'5pm-6pm','Vacant','Vacant','Occupied','Vacant'))
     elif('AC-204' in df_overall['17:30'][i]):
-      cursor.execute("INSERT INTO room_availability(room_no,start_time,end_time,day) VALUES(?,?,?,?)",('AC-204','17:30','18:30',df_overall[0][i]))
+      cursor.execute("INSERT INTO acFloor2(day,time_slot,r201,r202,r203,r204) VALUES(?,?,?,?,?,?)",(df_overall[0][i],'5pm-6pm','Vacant','Vacant','Vacant','Occupied'))
 
-#printing all the data from the database
-cursor.execute("""SELECT * from room_availability""")
+#printing all the data from the database acFloor1
+cursor.execute("""SELECT * from acFloor1""")
+rows = cursor.fetchall()
+
+for row in rows:
+  print(row)
+
+#printing all the data from the database acFloor2
+cursor.execute("""SELECT * from acFloor2""")
 rows = cursor.fetchall()
 
 for row in rows:
